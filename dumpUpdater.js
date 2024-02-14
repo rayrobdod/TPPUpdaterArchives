@@ -34,6 +34,10 @@ if (OUTFILE === undefined) {
 	//*/
 }
 
+const FETCH_HEADERS = {
+	"User-Agent": "node:dumpUpdater.js:v2024.02.13 (by /u/yoshord)",
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 const fs = require('fs');
@@ -80,6 +84,7 @@ class Fetcher {
 		return new Promise((resolve, reject)=>{
 			let loc = url.parse(`https://www.reddit.com/live/${LIVE_ID}/about.json`);
 			loc.method = 'GET';
+			loc.headers = FETCH_HEADERS;
 			let req = http.request(loc, (res)=>{
 				if (res.statusCode >= 400) return reject(new Error('Requested LiveID does not exist!'));
 				
@@ -131,6 +136,7 @@ class Fetcher {
 		return new Promise((resolve, reject)=>{
 			let loc = url.parse(this.urlBase+queryString);
 			loc.method = 'GET';
+			loc.headers = FETCH_HEADERS;
 			let req = http.request(loc, (res)=>{
 				if (res.statusCode >= 400) {
 					let err = new Error('Unsuccessful response!');
