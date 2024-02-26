@@ -5,7 +5,7 @@
 const USE_TERSE = true;
 
 // Get the command line arguments, skipping the first two
-const [,, LIVE_ID, OUTFILE] = process.argv;
+const [,, LIVE_ID, OUTFILE, STOP_UPDATE_ID] = process.argv;
 
 // If not reddit live id was passed to the command line, print help and exit
 if (LIVE_ID === undefined) {
@@ -15,8 +15,14 @@ if (LIVE_ID === undefined) {
 This program outputs an html file that has the entire update history of 
 a given reddit live updater. The first argument is the id of the updater:
 	http://reddit.com/live/[liveId]
+
 The second argument is an optional file to output to. If no file is 
 specified, the file will be output to stdout.
+
+The third argument is the update to stop processing at. Only updates
+newer than the update with the given id will be included in the output.
+If the argument is not set or if no update with the specified id exists,
+the entire updater will be included in the output.
 
 This is a node.js conversion by tustin2121 
 of the C# program originally made by flarn2006.
@@ -238,10 +244,12 @@ const TAG_DICT = (()=>{
 		OUT.println(`\t<aside>${escapeReddit(unescapeHtml(info.data.resources_html).replace(/>\n/g, '>'))}</aside>`);
 		
 		OUT.println(`\t<updates id="${LIVE_ID}">`);
+		fetchpageloop:
 		while(true) {
 			let updates = await FETCH.getNextPage();
 			if (!updates.length) break;
 			for (let update of updates) {
+				if (update.id == STOP_UPDATE_ID) break fetchpageloop;
 				let attrs = [];
 				attrs.push(`id="${update.id}"`);
 				attrs.push(`ts="${update.timestamp}"`);
