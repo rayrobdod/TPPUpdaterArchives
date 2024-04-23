@@ -40,7 +40,7 @@ header h2 {
 header p {
     margin: 0;
 }
-header h4 {
+header nav {
     position: absolute;
     font-size: 1em;
     font-weight: normal;

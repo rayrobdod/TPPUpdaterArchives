@@ -148,7 +148,6 @@ $(function(){
 	}
 	//*/
 	$('aside > nav li').on('click', navclick);
-	$('header').prepend('<h4><a href="/">&lt; Home</a></h4>');
 	
 	$('#enablePokedexBtn').on('click', function(){
 		$('body').addClass('fusionembed').prepend('<iframe id="fusionembed" name="fusionembed" src="pokedex.html" />');

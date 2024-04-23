@@ -227,8 +227,8 @@ const TAG_DICT = (()=>{
 <head>
 	<meta charset="UTF-8">
 	<title>${info.data.title} | Reddit Live Updater #${LIVE_ID}</title>
-	<style> 
-		updates { display: table; } 
+	<style>
+		updates { display: table; }
 		updates > ${TAG_DICT['update']} { display: table-row; }
 		updates > ${TAG_DICT['update']}::before { content: attr(ts); display: table-cell; }
 		updates > ${TAG_DICT['update']} > div { display: table-cell; }
@@ -240,7 +240,12 @@ const TAG_DICT = (()=>{
 	<script src="dumpedUpdates.js"></script>
 </head>
 <body>`);
-		OUT.println(`\t<header><h3>Updater archive for #${LIVE_ID}</h3><h1>${info.data.title}</h1><h2>${unescapeHtml(info.data.description_html)}</h2></header>`);
+		OUT.println(`\t<header>`);
+		OUT.println(`\t\t<nav><a href=".">&lt; Home</a></nav>`);
+		OUT.println(`\t\t<h3>Updater archive for #${LIVE_ID}</h3>`);
+		OUT.println(`\t\t<h1>${info.data.title}</h1>`);
+		OUT.println(`\t\t<h2>${unescapeHtml(info.data.description_html)}</h2>`);
+		OUT.println(`\t</header>`);
 		OUT.println(`\t<aside>${escapeReddit(unescapeHtml(info.data.resources_html).replace(/>\n/g, '>'))}</aside>`);
 		
 		OUT.println(`\t<updates id="${LIVE_ID}">`);
